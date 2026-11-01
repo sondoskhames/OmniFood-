@@ -5,7 +5,7 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 ///////////////////////////////////////////////////////////
 // Make mobile navigation work
-// (Tailwind styles react to the "nav-open" class on .header)
+// (CSS في الـ <style> بيتفاعل مع كلاس "nav-open" على .header)
 const btnNavEl = document.querySelector(".btn-mobile-nav");
 const headerEl = document.querySelector(".header");
 
