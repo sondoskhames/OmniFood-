@@ -24,6 +24,36 @@
       };
     </script>
 
+    <!-- ===== CSS عادي لقائمة الموبايل (بدل كلاسات Tailwind المركّبة) ===== -->
+    <style>
+      @media (max-width: 1023.98px) {
+        .main-nav {
+          position: fixed;
+          inset: 0;
+          width: 100%;
+          height: 100vh;
+          height: 100dvh;
+          z-index: 999;
+          background: rgba(255, 255, 255, 0.97);
+          opacity: 0;
+          visibility: hidden;
+          pointer-events: none;
+          transform: translateX(100%);
+          transition: all 0.5s ease-in;
+        }
+        .header.nav-open .main-nav {
+          opacity: 1;
+          visibility: visible;
+          pointer-events: auto;
+          transform: translateX(0);
+        }
+        .btn-mobile-nav {
+          position: relative;
+          z-index: 1000;
+        }
+      }
+    </style>
+
     <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
     <script defer src="https://unpkg.com/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js"></script>
@@ -34,12 +64,11 @@
 
   <body class="font-sans font-normal leading-none text-[#555] antialiased">
     <!-- ============ HEADER ============ -->
-    <!-- تم حذف relative (كان بيتعارض مع fixed) -->
     <header class="header group flex h-[96px] items-center justify-between bg-[#fdf2e9] px-6 lg:px-[48px] [.is-sticky_&]:fixed [.is-sticky_&]:left-0 [.is-sticky_&]:top-0 [.is-sticky_&]:z-[999] [.is-sticky_&]:h-[80px] [.is-sticky_&]:w-full [.is-sticky_&]:bg-white/[0.97] [.is-sticky_&]:shadow-[0_12px_32px_rgba(0,0,0,0.03)]">
       <a href="#"><img class="h-[22px]" alt="Omnifood logo" src="omnifood-logo.png" /></a>
 
-      <!-- النافيجيشن: fixed inset-0 + z-[999] على الموبايل، و static على lg -->
-      <nav class="main-nav pointer-events-none invisible fixed inset-0 z-[999] h-screen w-full translate-x-full bg-white/[0.97] opacity-0 transition-all duration-500 ease-in group-[.nav-open]:pointer-events-auto group-[.nav-open]:visible group-[.nav-open]:translate-x-0 group-[.nav-open]:opacity-100 lg:pointer-events-auto lg:visible lg:static lg:inset-auto lg:z-auto lg:h-auto lg:w-auto lg:translate-x-0 lg:bg-transparent lg:opacity-100 lg:transition-none">
+      <!-- الموبايل بيتحكم فيه الـ <style> فوق، وكلاسات lg: للديسكتوب بس -->
+      <nav class="main-nav lg:visible lg:pointer-events-auto lg:static lg:h-auto lg:w-auto lg:translate-x-0 lg:bg-transparent lg:opacity-100">
         <ul class="main-nav-list flex h-full flex-col items-center justify-center gap-[48px] lg:h-auto lg:flex-row lg:justify-start">
           <li><a class="main-nav-link inline-block text-[30px] font-medium text-[#333] transition-all duration-300 hover:text-[#cf711f] lg:text-[18px]" href="#how">How it works</a></li>
           <li><a class="main-nav-link inline-block text-[30px] font-medium text-[#333] transition-all duration-300 hover:text-[#cf711f] lg:text-[18px]" href="#meals">Meals</a></li>
