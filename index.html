@@ -52,72 +52,96 @@
 
   <body class="font-sans font-normal leading-none text-[#555] antialiased">
     <!-- ============ HEADER ============ -->
-    <header
-      class="header group relative flex h-[96px] items-center justify-between bg-[#fdf2e9] px-6 lg:px-[48px] [.is-sticky_&]:fixed [.is-sticky_&]:left-0 [.is-sticky_&]:top-0 [.is-sticky_&]:z-[999] [.is-sticky_&]:h-[80px] [.is-sticky_&]:w-full [.is-sticky_&]:bg-white/[0.97] [.is-sticky_&]:shadow-[0_12px_32px_rgba(0,0,0,0.03)]"
+  
+<header
+  class="header relative flex h-[96px] items-center justify-between bg-[#fdf2e9] px-6 lg:px-[48px]"
+>
+  <!-- Logo -->
+  <a href="#">
+    <img
+      class="h-[22px]"
+      alt="Omnifood logo"
+      src="omnifood-logo.png"
+    />
+  </a>
+
+  <!-- Navigation -->
+  <nav
+    class="main-nav pointer-events-none invisible absolute left-0 top-0 z-[999] h-screen w-full translate-x-full bg-white/[0.97] opacity-0 transition-all duration-500 ease-in lg:pointer-events-auto lg:visible lg:static lg:h-auto lg:w-auto lg:translate-x-0 lg:bg-transparent lg:opacity-100 lg:transition-none"
+  >
+    <ul
+      class="main-nav-list flex h-full flex-col items-center justify-center gap-[48px] lg:h-auto lg:flex-row lg:justify-start"
     >
-      <a href="#">
-        <img class="h-[22px]" alt="Omnifood logo" src="
-          omnifood-logo.png" />
-      </a>
+      <li>
+        <a class="main-nav-link inline-block text-[30px] font-medium text-[#333] hover:text-[#cf711f] lg:text-[18px]" href="#how">
+          How it works
+        </a>
+      </li>
 
-      <nav
-        class="main-nav pointer-events-none invisible absolute left-0 top-0 h-screen w-full translate-x-full bg-white/[0.97] opacity-0 transition-all duration-500 ease-in group-[.nav-open]:pointer-events-auto group-[.nav-open]:visible group-[.nav-open]:translate-x-0 group-[.nav-open]:opacity-100 lg:pointer-events-auto lg:visible lg:static lg:h-auto lg:w-auto lg:translate-x-0 lg:bg-transparent lg:opacity-100 lg:transition-none"
-      >
-        <ul
-          class="main-nav-list flex h-full flex-col items-center justify-center gap-[48px] lg:h-auto lg:flex-row lg:justify-start"
-        >
-          <li>
-            <a
-              class="main-nav-link inline-block text-[30px] font-medium text-[#333] transition-all duration-300 hover:text-[#cf711f] lg:text-[18px]"
-              href="#how"
-              >How it works</a
-            >
-          </li>
-          <li>
-            <a
-              class="main-nav-link inline-block text-[30px] font-medium text-[#333] transition-all duration-300 hover:text-[#cf711f] lg:text-[18px]"
-              href="#meals"
-              >Meals</a
-            >
-          </li>
-          <li>
-            <a
-              class="main-nav-link inline-block text-[30px] font-medium text-[#333] transition-all duration-300 hover:text-[#cf711f] lg:text-[18px]"
-              href="#testimonials"
-              >Testimonials</a
-            >
-          </li>
-          <li>
-            <a
-              class="main-nav-link inline-block text-[30px] font-medium text-[#333] transition-all duration-300 hover:text-[#cf711f] lg:text-[18px]"
-              href="#pricing"
-              >Pricing</a
-            >
-          </li>
-          <li>
-            <a
-              class="main-nav-link nav-cta inline-block rounded-[9px] bg-[#e67e22] px-[24px] py-[12px] text-[30px] font-medium text-white transition-all duration-300 hover:bg-[#cf711f] hover:text-white lg:text-[18px]"
-              href="#cta"
-              >Try for free</a
-            >
-          </li>
-        </ul>
-      </nav>
+      <li>
+        <a class="main-nav-link inline-block text-[30px] font-medium text-[#333] hover:text-[#cf711f] lg:text-[18px]" href="#meals">
+          Meals
+        </a>
+      </li>
 
-      <button
-        class="btn-mobile-nav z-[999999] block cursor-pointer border-0 bg-transparent lg:hidden"
-        aria-label="Toggle navigation"
-      >
-        <ion-icon
-          class="icon-mobile-nav h-[48px] w-[48px] text-[#333] group-[.nav-open]:hidden"
-          name="menu-outline"
-        ></ion-icon>
-        <ion-icon
-          class="icon-mobile-nav hidden h-[48px] w-[48px] text-[#333] group-[.nav-open]:block"
-          name="close-outline"
-        ></ion-icon>
-      </button>
-    </header>
+      <li>
+        <a class="main-nav-link inline-block text-[30px] font-medium text-[#333] hover:text-[#cf711f] lg:text-[18px]" href="#testimonials">
+          Testimonials
+        </a>
+      </li>
+
+      <li>
+        <a class="main-nav-link inline-block text-[30px] font-medium text-[#333] hover:text-[#cf711f] lg:text-[18px]" href="#pricing">
+          Pricing
+        </a>
+      </li>
+
+      <li>
+        <a class="main-nav-link nav-cta inline-block rounded-[9px] bg-[#e67e22] px-[24px] py-[12px] text-[30px] font-medium text-white hover:bg-[#cf711f] lg:text-[18px]" href="#cta">
+          Try for free
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Mobile Button -->
+  <button
+    class="btn-mobile-nav z-[1000] block cursor-pointer border-0 bg-transparent lg:hidden"
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    type="button"
+  >
+    <ion-icon
+      class="menu-icon h-[48px] w-[48px] text-[#333]"
+      name="menu-outline"
+    ></ion-icon>
+
+    <ion-icon
+      class="close-icon hidden h-[48px] w-[48px] text-[#333]"
+      name="close-outline"
+    ></ion-icon>
+  </button>
+</header>
+<style> 
+/* Mobile Navigation */
+
+@media (max-width: 1023px) {
+  .header.nav-open .main-nav {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .header.nav-open .menu-icon {
+    display: none;
+  }
+
+  .header.nav-open .close-icon {
+    display: block;
+  }
+}
+</style>
 
     <main>
       <!-- ============ HERO ============ -->
