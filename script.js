@@ -1,125 +1,75 @@
-
 ///////////////////////////////////////////////////////////
-// 1. Set Current Year
-
+// Set current year (only if a .year element exists in the page)
 const yearEl = document.querySelector(".year");
-
-if (yearEl) {
-  yearEl.textContent = new Date().getFullYear();
-}
-
+if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 ///////////////////////////////////////////////////////////
-// 2. Mobile Navigation
+// Make mobile navigation work
+// (Tailwind styles react to the "nav-open" class on .header)
 
 const btnNavEl = document.querySelector(".btn-mobile-nav");
 const headerEl = document.querySelector(".header");
 
-if (btnNavEl && headerEl) {
-  btnNavEl.addEventListener("click", function () {
-
-    // Open / Close Navigation
-    headerEl.classList.toggle("nav-open");
-
-    // Update accessibility attribute
-    const isOpen = headerEl.classList.contains("nav-open");
-
-    btnNavEl.setAttribute("aria-expanded", isOpen);
-
-  });
-}
-
+btnNavEl.addEventListener("click", function () {
+  headerEl.classList.toggle("nav-open");
+});
 
 ///////////////////////////////////////////////////////////
-// 3. Smooth Scrolling
+// Smooth scrolling animation
 
 const allLinks = document.querySelectorAll("a:link");
 
 allLinks.forEach(function (link) {
-
   link.addEventListener("click", function (e) {
-
     const href = link.getAttribute("href");
 
-    // Ignore external links and empty links
+    // Only handle in-page links (leave tel:, mailto: etc. alone)
     if (!href || !href.startsWith("#")) return;
 
     e.preventDefault();
 
-    // Scroll to top
-    if (href === "#") {
-
+    // Scroll back to top
+    if (href === "#")
       window.scrollTo({
         top: 0,
         behavior: "smooth",
       });
 
-    }
-
-    // Scroll to another section
-    else {
-
+    // Scroll to other sections
+    if (href !== "#") {
       const sectionEl = document.querySelector(href);
-
-      if (sectionEl) {
-        sectionEl.scrollIntoView({
-          behavior: "smooth",
-        });
-      }
-
+      if (sectionEl) sectionEl.scrollIntoView({ behavior: "smooth" });
     }
 
-    // Close mobile navigation after clicking a menu link
-    if (link.classList.contains("main-nav-link")) {
-
-      if (headerEl) {
-        headerEl.classList.remove("nav-open");
-      }
-
-      if (btnNavEl) {
-        btnNavEl.setAttribute("aria-expanded", "false");
-      }
-
-    }
-
+    // Close mobile navigation
+    if (link.classList.contains("main-nav-link"))
+      headerEl.classList.remove("nav-open");
   });
-
 });
 
-
 ///////////////////////////////////////////////////////////
-// 4. Sticky Navigation
+// Sticky navigation
+// (Tailwind styles react to the "is-sticky" class on <body>)
 
 const sectionHeroEl = document.querySelector(".section-hero");
 
-if (sectionHeroEl && "IntersectionObserver" in window) {
+const obs = new IntersectionObserver(
+  function (entries) {
+    const ent = entries[0];
 
-  const obs = new IntersectionObserver(
-
-    function (entries) {
-
-      const ent = entries[0];
-
-      if (!ent.isIntersecting) {
-
-        document.body.classList.add("is-sticky");
-
-      } else {
-
-        document.body.classList.remove("is-sticky");
-
-      }
-
-    },
-
-    {
-      root: null,
-      threshold: 0,
-      rootMargin: "-80px",
+    if (ent.isIntersecting === false) {
+      document.body.classList.add("is-sticky");
     }
 
-  );
-
-  obs.observe(sectionHeroEl);
-
-}
+    if (ent.isIntersecting === true) {
+      document.body.classList.remove("is-sticky");
+    }
+  },
+  {
+    // In the viewport
+    root: null,
+    threshold: 0,
+    rootMargin: "-80px",
+  }
+);
+obs.observe(sectionHeroEl);
