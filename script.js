@@ -1,64 +1,63 @@
-///////////////////////////////////////////////////////////
-// Set current year (only if a .year element exists in the page)
-const yearEl = document.querySelector(".year");
-if (yearEl) yearEl.textContent = new Date().getFullYear();
+(function () {
+  // لو الملف اتحمّل مرتين، النسخة التانية متشتغلش
+  if (window.__omnifoodInit) return;
+  window.__omnifoodInit = true;
 
-///////////////////////////////////////////////////////////
-// Make mobile navigation work
-// (CSS في الـ <style> بيتفاعل مع كلاس "nav-open" على .header)
-const btnNavEl = document.querySelector(".btn-mobile-nav");
-const headerEl = document.querySelector(".header");
+  ///////////////////////////////////////////////////////////
+  // Set current year (only if a .year element exists in the page)
+  const yearEl = document.querySelector(".year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-btnNavEl.addEventListener("click", function () {
-  headerEl.classList.toggle("nav-open");
-  // منع سكرول الصفحة والقائمة مفتوحة
-  document.body.classList.toggle(
-    "overflow-hidden",
-    headerEl.classList.contains("nav-open")
-  );
-});
+  ///////////////////////////////////////////////////////////
+  // Make mobile navigation work
+  const btnNavEl = document.querySelector(".btn-mobile-nav");
+  const headerEl = document.querySelector(".header");
 
-///////////////////////////////////////////////////////////
-// Smooth scrolling animation
-const allLinks = document.querySelectorAll("a:link");
-
-allLinks.forEach(function (link) {
-  link.addEventListener("click", function (e) {
-    const href = link.getAttribute("href");
-
-    // Only handle in-page links (leave tel:, mailto: etc. alone)
-    if (!href || !href.startsWith("#")) return;
-
-    e.preventDefault();
-
-    // Scroll back to top
-    if (href === "#") window.scrollTo({ top: 0, behavior: "smooth" });
-
-    // Scroll to other sections
-    if (href !== "#") {
-      const sectionEl = document.querySelector(href);
-      if (sectionEl) sectionEl.scrollIntoView({ behavior: "smooth" });
-    }
-
-    // Close mobile navigation
-    if (link.classList.contains("main-nav-link")) {
-      headerEl.classList.remove("nav-open");
-      document.body.classList.remove("overflow-hidden");
-    }
+  btnNavEl.addEventListener("click", function (e) {
+    e.stopImmediatePropagation();
+    const isOpen = headerEl.classList.toggle("nav-open");
+    document.body.classList.toggle("overflow-hidden", isOpen);
   });
-});
 
-///////////////////////////////////////////////////////////
-// Sticky navigation
-// (Tailwind styles react to the "is-sticky" class on <body>)
-const sectionHeroEl = document.querySelector(".section-hero");
+  ///////////////////////////////////////////////////////////
+  // Smooth scrolling animation
+  const allLinks = document.querySelectorAll("a:link");
 
-const obs = new IntersectionObserver(
-  function (entries) {
-    const ent = entries[0];
-    if (ent.isIntersecting === false) document.body.classList.add("is-sticky");
-    if (ent.isIntersecting === true) document.body.classList.remove("is-sticky");
-  },
-  { root: null, threshold: 0, rootMargin: "-80px" }
-);
-obs.observe(sectionHeroEl);
+  allLinks.forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      const href = link.getAttribute("href");
+
+      // Only handle in-page links (leave tel:, mailto: etc. alone)
+      if (!href || !href.startsWith("#")) return;
+
+      e.preventDefault();
+
+      if (href === "#") window.scrollTo({ top: 0, behavior: "smooth" });
+
+      if (href !== "#") {
+        const sectionEl = document.querySelector(href);
+        if (sectionEl) sectionEl.scrollIntoView({ behavior: "smooth" });
+      }
+
+      // Close mobile navigation
+      if (link.classList.contains("main-nav-link")) {
+        headerEl.classList.remove("nav-open");
+        document.body.classList.remove("overflow-hidden");
+      }
+    });
+  });
+
+  ///////////////////////////////////////////////////////////
+  // Sticky navigation
+  const sectionHeroEl = document.querySelector(".section-hero");
+
+  const obs = new IntersectionObserver(
+    function (entries) {
+      const ent = entries[0];
+      if (ent.isIntersecting === false) document.body.classList.add("is-sticky");
+      if (ent.isIntersecting === true) document.body.classList.remove("is-sticky");
+    },
+    { root: null, threshold: 0, rootMargin: "-80px" }
+  );
+  obs.observe(sectionHeroEl);
+})();
